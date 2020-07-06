@@ -96,6 +96,27 @@ public class DatabaseAdapter {
         return todoModelList;
     }
 
+    public TodoModel getToDoId(long id) throws Exception{
+        TodoModel todoModel = null;
+        Cursor cursor = sqLiteDatabase.query(Schema.TodoColumns.TABLE_NAME,
+                new String[]{Schema.TodoColumns._ID, Schema.TodoColumns.TITLE_COLUMN, Schema.TodoColumns.CONTENT_COLUMN},
+                Schema.TodoColumns._ID + "=?",
+                new String[]{Long.toString(id)},
+                null,
+                null,
+                Schema.TodoColumns._ID + " ASC",
+                null);
+
+        if (cursor != null & cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            todoModel = new TodoModel(cursor.getLong(0), cursor.getString(1), cursor.getString(2));
+        } else {
+            throw new Exception("No Task Found");
+        }
+
+        return todoModel;
+    }
+
 
     private static class DatabaseHelper extends SQLiteOpenHelper{
 
