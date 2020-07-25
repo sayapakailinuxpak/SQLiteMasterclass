@@ -1,4 +1,4 @@
-package com.eldisprojectexpert.sqlitemasterclass;
+package com.eldisprojectexpert.sqlitemasterclass.model;
 
 public class TodoModel {
     private long id;

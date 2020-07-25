@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.eldisprojectexpert.sqlitemasterclass.TodoModel;
+import com.eldisprojectexpert.sqlitemasterclass.model.TodoModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,18 +96,16 @@ public class DatabaseAdapter {
         return todoModelList;
     }
 
-    public TodoModel getToDoId(long id) throws Exception{
+    public TodoModel getTodo(long id) throws Exception{
         TodoModel todoModel = null;
         Cursor cursor = sqLiteDatabase.query(Schema.TodoColumns.TABLE_NAME,
                 new String[]{Schema.TodoColumns._ID, Schema.TodoColumns.TITLE_COLUMN, Schema.TodoColumns.CONTENT_COLUMN},
-                Schema.TodoColumns._ID + "=?",
-                new String[]{Long.toString(id)},
+                Schema.TodoColumns._ID, new String[]{String.valueOf(id)},
                 null,
                 null,
-                Schema.TodoColumns._ID + " ASC",
+                null,
                 null);
-
-        if (cursor != null & cursor.getCount() > 0) {
+        if (cursor!=null & cursor.getCount()>0){
             cursor.moveToFirst();
             todoModel = new TodoModel(cursor.getLong(0), cursor.getString(1), cursor.getString(2));
         } else {
